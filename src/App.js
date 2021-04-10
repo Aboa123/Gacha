@@ -6,7 +6,8 @@ import {
     Button,
     notification,
     Modal,
-    message
+    message,
+    Tooltip
 } from 'antd';
 import './App.css';
 import 'antd/dist/antd.css';
@@ -23,7 +24,8 @@ function App() {
     const [drawCheckNomal, setDrawCheckNomal] = useState(false);
     const [drawCheckSp, setDrawCheckSp] = useState(false);
 
-    const [isOpen, setIsOpen] = useState(false);
+    const [isInvenOpen, setIsInvenOpen] = useState(false);
+    const [isRuleOpen, setIsRuleOpen] = useState(false);
 
     useEffect(()=>{
         const tmpInven = localStorage.getItem('inven');
@@ -61,7 +63,7 @@ function App() {
             let a = null;
             a = setInterval(()=>{
                 const main_random = (Math.random() * (100 - 0 + 1)) + 0;
-                if(main_random <= 0.1)
+                if(main_random <= 0.05)
                 {
                     const ran =  Math.floor((Math.random() * (Data[5].cards.length - 0)) + 0);
                     d = [...d,
@@ -73,7 +75,7 @@ function App() {
                     ];
                     setDraw(d);
                 }
-                else if(main_random <= 1)
+                else if(main_random <= 1.05)
                 {
                     const ran =  Math.floor((Math.random() * (Data[4].cards.length - 0)) + 0);
                     d = [...d,
@@ -85,7 +87,7 @@ function App() {
                     ];
                     setDraw(d);
                 }
-                else if(main_random <= 4.5)
+                else if(main_random <= 3.4)
                 {
                     const ran =  Math.floor((Math.random() * (Data[3].cards.length - 0)) + 0);
                     d = [...d,
@@ -97,7 +99,7 @@ function App() {
                     ];
                     setDraw(d);
                 }
-                else if(main_random <= 9.4)
+                else if(main_random <= 8.5)
                 {
                     const ran =  Math.floor((Math.random() * (Data[2].cards.length - 0)) + 0);
                     d = [...d,
@@ -109,7 +111,7 @@ function App() {
                     ];
                     setDraw(d);
                 }
-                else if(main_random <= 20)
+                else if(main_random <= 15)
                 {
                     const ran =  Math.floor((Math.random() * (Data[1].cards.length - 0)) + 0);
                     d = [...d,
@@ -121,7 +123,7 @@ function App() {
                     ];
                     setDraw(d);
                 }
-                else if(main_random <= 65)
+                else if(main_random <= 72)
                 {
                     const ran =  Math.floor((Math.random() * (Data[0].cards.length - 0)) + 0);
                     d = [...d,
@@ -182,9 +184,9 @@ function App() {
             a = setInterval(()=>{
                 let main_random = (Math.random() * (9.4 - 0 + 1)) + 0;
 
-                if(main_random > 9.4) main_random = 9.4;
+                if(main_random > 8.5) main_random = 8.5;
 
-                if(main_random <= 0.1)
+                if(main_random <= 0.05)
                 {
                     const ran =  Math.floor((Math.random() * (Data[5].cards.length - 0)) + 0);
                     d = [...d,
@@ -196,7 +198,7 @@ function App() {
                     ];
                     setDraw(d);
                 }
-                else if(main_random <= 1)
+                else if(main_random <= 1.05)
                 {
                     const ran =  Math.floor((Math.random() * (Data[4].cards.length - 0)) + 0);
                     d = [...d,
@@ -208,7 +210,7 @@ function App() {
                     ];
                     setDraw(d);
                 }
-                else if(main_random <= 4.5)
+                else if(main_random <= 3.4)
                 {
                     const ran =  Math.floor((Math.random() * (Data[3].cards.length - 0)) + 0);
                     d = [...d,
@@ -220,7 +222,7 @@ function App() {
                     ];
                     setDraw(d);
                 }
-                else if(main_random <= 9.4)
+                else if(main_random <= 8.5)
                 {
                     const ran =  Math.floor((Math.random() * (Data[2].cards.length - 0)) + 0);
                     d = [...d,
@@ -232,7 +234,7 @@ function App() {
                     ];
                     setDraw(d);
                 }
-                else if(main_random <= 20)
+                else if(main_random <= 15)
                 {
                     const ran =  Math.floor((Math.random() * (Data[1].cards.length - 0)) + 0);
                     d = [...d,
@@ -244,7 +246,7 @@ function App() {
                     ];
                     setDraw(d);
                 }
-                else if(main_random <= 65)
+                else if(main_random <= 72)
                 {
                     const ran =  Math.floor((Math.random() * (Data[0].cards.length - 0)) + 0);
                     d = [...d,
@@ -343,21 +345,30 @@ function App() {
     }
 
     const openInven = () => {
-        setIsOpen(true);
+        setIsInvenOpen(true);
     }
+
+    const openRule = () => {
+        setIsRuleOpen(true)
+    }
+
+    const cardSum = () => Data[0].cards.length+Data[1].cards.length+Data[2].cards.length+Data[3].cards.length+Data[4].cards.length+Data[5].cards.length;
 
     return (
         <div className="app">
             <header className="header">
-                <button type="primary" onClick={openInven} className="inventory_button" disabled={drawCheckNomal}>
+                <button onClick={openInven} className="inventory_button" disabled={drawCheckNomal}>
                     인벤토리
                 </button>
+                <button onClick={openRule} className="rule_button" disabled={drawCheckNomal}>
+                    뽑기확률 및 카드개수
+                </button>
                 <div style={{ marginRight: 50 }}>
-                    <button type="primary" onClick={nomalDraw} className="nmButton" disabled={drawCheckNomal}>
+                    <button onClick={nomalDraw} className="nmButton" disabled={drawCheckNomal}>
                         일반 10장 뽑기<br/>
                         50,000 다이아
                     </button>
-                    <button type="primary" onClick={spDraw} className="spButton" style={{ marginLeft: 20, height: "auto" }} disabled={drawCheckSp}>
+                    <button onClick={spDraw} className="spButton" style={{ marginLeft: 20, height: "auto" }} disabled={drawCheckSp}>
                         스페셜 10장 뽑기<br/>
                         500,000 다이아
                     </button>
@@ -369,49 +380,61 @@ function App() {
             </header>
             <div className="panel">
                 <div className="penel_gocha">
-                    {draw.map((item, index)=> <Card key={index} class={item.class} name={item.name} />)}
-                </div>
-            </div>
-            <div className="info">
-                <div className="info_left">
-                    등급은 N, R, SR, SSR, UR, LR으로 이루어져 있습니다.<br/>
-                    N등급 10장<br/>
-                    R등급 10장<br/>
-                    SR등급 10장<br/>
-                    SSR등급 10장<br/>
-                    UR등급 5장<br/>
-                    LR등급 3장<br/>
-                    총 48장<br/><br/>
-                    N등급 65%<br/>
-                    R등급 15%<br/>
-                    SR등급 12%<br/>
-                    SSR등급 4.5%<br/>
-                    UR등급 1%<br/>
-                    LR등급 0.1%<br/>
-                </div>
-                <div className="info_right">
-                    판매금액<br/>
-                    N등급 1,000원<br/>
-                    R등급 5,000원<br/>
-                    SR등급 15,000원<br/>
-                    SSR등급 50,000원<br/>
-                    UR등급 100,000원<br/>
-                    LR등급 300,000원<br/>
+                    {draw.map((item, index)=> <Card key={index} class={item.class} name={item.name} url={item.card.url} />)}
                 </div>
             </div>
             <Modal
-                visible={isOpen}
+                visible={isInvenOpen}
                 width={"90%"}
                 centered
-                onOk={() => setIsOpen(false)}
-                onCancel={() => setIsOpen(false)}
+                onOk={() => setIsInvenOpen(false)}
+                onCancel={() => setIsInvenOpen(false)}
                 okButtonProps={{ hidden: true }}
                 cancelButtonProps={{ hidden: true }}
             >
                 <div className="inven">
                     <h1 className="inven_title">수집카드</h1>
                     <div className="inven_panel">
-                        {Data.map((item, index)=><Card key={index} class={item.class} mainItem={item.cards}  inven={inven} sell={sell} />)}
+                        {Data.map((item, index)=><Card key={index} class={item.class} mainItem={item.cards} inven={inven} sell={sell} />)}
+                    </div>
+                </div>
+            </Modal>
+            <Modal
+                visible={isRuleOpen}
+                width={"90%"}
+                centered
+                onOk={() => setIsRuleOpen(false)}
+                onCancel={() => setIsRuleOpen(false)}
+                okButtonProps={{ hidden: true }}
+                cancelButtonProps={{ hidden: true }}
+            >
+                <div className="info">
+                    <div className="info_left">
+                        등급은 N, R, SR, SSR, UR, LR으로 이루어져 있습니다.<br/>
+                        N등급 {Data[0].cards.length}장<br/>
+                        R등급 {Data[1].cards.length}장<br/>
+                        SR등급 {Data[2].cards.length}장<br/>
+                        SSR등급 {Data[3].cards.length}장<br/>
+                        UR등급 {Data[4].cards.length}장<br/>
+                        LR등급 {Data[5].cards.length}장<br/>
+                        총 {cardSum()}장<br/><br/>
+                        N등급 65%<br/>
+                        R등급 15%<br/>
+                        SR등급 12%<br/>
+                        SSR등급 4.5%<br/>
+                        UR등급 1%<br/>
+                        LR등급 0.1%<br/>
+                    </div>
+                    <div className="info_right">
+                        판매금액<br/>
+                        N등급 1,000원<br/>
+                        R등급 5,000원<br/>
+                        SR등급 15,000원<br/>
+                        SSR등급 50,000원<br/>
+                        UR등급 100,000원<br/>
+                        LR등급 300,000원<br/><br/>
+                        일반뽑기 N ~ LR 랜덤 지급<br/>
+                        스페셜뽑기 N, R 등급 제외 SR ~ LR 랜덤 지급
                     </div>
                 </div>
             </Modal>

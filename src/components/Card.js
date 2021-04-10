@@ -18,8 +18,19 @@ export const Card = (props) => {
     return(
         !props.mainItem ?
         <div className={`gocha_card_touch gocha_card_${props.class}`}>
-            <span style={{ fontSize: "50px", fontWeight: "bold", color: "white" }}>{props.class}</span>
-            <span style={{ fontSize: "20px", fontWeight: "bold", color: "white" }}>{props.name}</span>
+            <img
+                width={"100%"}
+                height={"100%"}
+                style={{ position: "absolute", zIndex: 1 }}
+                src={`/img/${props.class}_card.png`}
+            />
+            <img
+                width={"100%"}
+                height={"100%"}
+                style={{ position: "absolute" }}
+                src={props.url}
+            />
+            <span className={(props.class === "UR" || props.class === "LR") ? "card_name_white" : "card_name_color"}>{props.name}</span>
         </div>
         :
         props.mainItem.map((item, index)=>
@@ -30,11 +41,25 @@ export const Card = (props) => {
                     className={count(item, props.class) ? `gocha_card_touch gocha_card_${props.class}` : "gocha_card_touch"}
                 >
                     {
-                        count(item, props.class) > 0 &&
-                        <span className="card_count">x{count(item, props.class)}</span>
+                        count(item, props.class) > 0 &&(
+                            <>
+                            <img
+                                width={"100%"}
+                                height={"100%"}
+                                style={{ position: "absolute", zIndex: 1 }}
+                                src={`/img/${props.class}_card.png`}
+                            />
+                            <img
+                                width={"100%"}
+                                height={"100%"}
+                                style={{ position: "absolute" }}
+                                src={item.url}
+                            />
+                            <span className="card_count">x{count(item, props.class)}</span>
+                            </>
+                        )
                     }
-                    <span style={{ fontSize: "50px", fontWeight: "bold", color: "white" }}>{props.class}</span>
-                    <span style={{ fontSize: "20px", fontWeight: "bold", color: "white" }}>{count(item, props.class) < 1 ? "?" : item.name}</span>
+                    <span className={(props.class === "UR" || props.class === "LR") ? "card_name_white" : "card_name_color"}>{count(item, props.class) < 1 ? "?" : item.name}</span>
                 </button>
             </Tooltip>
         )
