@@ -196,7 +196,6 @@ function App() {
                             name: Data[5].cards[ran].name
                         }
                     ];
-                    setDraw(d);
                 }
                 else if(main_random <= 1.05)
                 {
@@ -208,7 +207,6 @@ function App() {
                             name: Data[4].cards[ran].name
                         }
                     ];
-                    setDraw(d);
                 }
                 else if(main_random <= 3.4)
                 {
@@ -220,7 +218,6 @@ function App() {
                             name: Data[3].cards[ran].name
                         }
                     ];
-                    setDraw(d);
                 }
                 else if(main_random <= 8.5)
                 {
@@ -232,7 +229,6 @@ function App() {
                             name: Data[2].cards[ran].name
                         }
                     ];
-                    setDraw(d);
                 }
                 else if(main_random <= 15)
                 {
@@ -244,7 +240,6 @@ function App() {
                             name: Data[1].cards[ran].name
                         }
                     ];
-                    setDraw(d);
                 }
                 else if(main_random <= 72)
                 {
@@ -256,7 +251,6 @@ function App() {
                             name: Data[0].cards[ran].name
                         }
                     ];
-                    setDraw(d);
                 }
                 else
                 {
@@ -268,8 +262,9 @@ function App() {
                             name: Data[0].cards[ran].name
                         }
                     ];
-                    setDraw(d);
                 }
+                
+                setDraw(d);
                 
                 if(d.length >= 10)
                 {
@@ -361,7 +356,7 @@ function App() {
                     인벤토리
                 </button>
                 <button onClick={openRule} className="rule_button" disabled={drawCheckNomal}>
-                    뽑기확률 및 카드개수
+                    게임안내
                 </button>
                 <div style={{ marginRight: 50 }}>
                     <button onClick={nomalDraw} className="nmButton" disabled={drawCheckNomal}>
@@ -418,12 +413,12 @@ function App() {
                         UR등급 {Data[4].cards.length}장<br/>
                         LR등급 {Data[5].cards.length}장<br/>
                         총 {cardSum()}장<br/><br/>
-                        N등급 65%<br/>
+                        N등급 72%<br/>
                         R등급 15%<br/>
-                        SR등급 12%<br/>
-                        SSR등급 4.5%<br/>
-                        UR등급 1%<br/>
-                        LR등급 0.1%<br/>
+                        SR등급 8.5%<br/>
+                        SSR등급 3.4%<br/>
+                        UR등급 1.05%<br/>
+                        LR등급 0.05%<br/>
                     </div>
                     <div className="info_right">
                         판매금액<br/>

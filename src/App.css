@@ -112,7 +112,7 @@
   margin: 10px;
   height: 350px;
   width: 250px;
-  background-color: gray;
+  background-color: gary;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -130,7 +130,7 @@
   margin: 10px;
   height: 350px;
   width: 250px;
-  background-color: gray;
+  background-color: white;
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
@@ -158,12 +158,12 @@
 
 .card_count {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 20px;
   color: white;
   position: absolute;
   top: 5px;
   left: 15px;
-  text-shadow: black 2px 2px 5px;
+  text-shadow: black 1px 1px 4px;
 }
 
 .panel {

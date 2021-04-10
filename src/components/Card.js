@@ -27,7 +27,7 @@ export const Card = (props) => {
             <img
                 width={"100%"}
                 height={"100%"}
-                style={{ position: "absolute" }}
+                style={{ position: "absolute", objectFit: "fill" }}
                 src={props.url}
             />
             <span className={(props.class === "UR" || props.class === "LR") ? "card_name_white" : "card_name_color"}>{props.name}</span>
@@ -52,7 +52,7 @@ export const Card = (props) => {
                             <img
                                 width={"100%"}
                                 height={"100%"}
-                                style={{ position: "absolute" }}
+                                style={{ position: "absolute", objectFit: "fill" }}
                                 src={item.url}
                             />
                             <span className="card_count">x{count(item, props.class)}</span>
