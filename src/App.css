@@ -1,3 +1,20 @@
+* {
+  font-family: "noto-light";
+}
+
+a {
+  text-decoration: none;
+}
+
+.git {
+  position: absolute;
+  left: 190px;
+  top: 25px;
+  color: white;
+  font-family: 'noto-bold';
+  font-size: 20px;
+}
+
 .app {
   height: 100vh;
   flex-direction: column;
@@ -6,7 +23,7 @@
 }
 
 .app .header {
-  z-index: 1;
+  z-index: 3;
   width: 100%;
   position: fixed;
   background-color: black;
@@ -31,6 +48,21 @@
   margin: 0;
   display: flex;
   align-items: center;
+}
+
+.resetButton {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-weight: bold;
+  color: white;
+  background: #e66465;
+  padding: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-right: 20px;
+  height: 100%;
+  vertical-align: top;
 }
 
 .nmButton {
@@ -158,12 +190,49 @@
 
 .card_count {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 25px;
   color: white;
   position: absolute;
+  font-family: 'noto-bold';
   top: 5px;
   left: 15px;
   text-shadow: black 1px 1px 4px;
+}
+
+.card_shild {
+  position: absolute;
+  width: 100%;
+  background-color: #e66465;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.card_shild span {
+  font-size: 50px;
+  font-family: "noto-bold";
+  text-shadow: 1px 1px 5px black;
+}
+
+.card_shild_N {
+  background-color: #15120b;
+}
+.card_shild_R {
+  background-color: #21aab4;
+}
+.card_shild_SR {
+  background: linear-gradient(#095221, #4760ff);
+}
+.card_shild_SSR {
+  background: linear-gradient(#1c3df8, #629fe6);
+}
+.card_shild_UR {
+  background: linear-gradient(#aee664, #0ba18d);
+}
+.card_shild_LR {
+  background: linear-gradient(#e66465, #9198e5);
 }
 
 .panel {
@@ -227,4 +296,31 @@
 
 .info .info_right {
   
+}
+
+
+
+@font-face {
+  font-family: "noto-black";
+  src: url('/src/fonts/NotoSansKR-Black.otf');
+}
+@font-face {
+  font-family: "noto-bold";
+  src: url('/src/fonts/NotoSansKR-Bold.otf');
+}
+@font-face {
+  font-family: "noto-Light";
+  src: url('/src/fonts/NotoSansKR-Light.otf');
+}
+@font-face {
+  font-family: "noto-medium";
+  src: url('/src/fonts/NotoSansKR-Medium.otf');
+}
+@font-face {
+  font-family: "noto-regular";
+  src: url('/src/fonts/NotoSansKR-Regular.otf');
+}
+@font-face {
+  font-family: "noto-thin";
+  src: url('/src/fonts/NotoSansKR-Thin.otf');
 }

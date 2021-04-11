@@ -3,11 +3,10 @@ import React, {
     useEffect,
 } from 'react';
 import {
-    Button,
     notification,
     Modal,
     message,
-    Tooltip
+    Checkbox
 } from 'antd';
 import './App.css';
 import 'antd/dist/antd.css';
@@ -16,7 +15,7 @@ import { Card } from './components/Card';
 import Data from './Data';
 
 function App() {
-    const [coin, setCoin] = useState(250000);
+    const [coin, setCoin] = useState(400000);
 
     const [draw, setDraw] = useState([]);
     const [inven, setInven] = useState([]);
@@ -26,6 +25,9 @@ function App() {
 
     const [isInvenOpen, setIsInvenOpen] = useState(false);
     const [isRuleOpen, setIsRuleOpen] = useState(false);
+
+    const [shildDisable ,setShildDisable] = useState(true);
+    const [speedMode ,setSpeedMode] = useState(false);
 
     useEffect(()=>{
         const tmpInven = localStorage.getItem('inven');
@@ -155,7 +157,7 @@ function App() {
                     setDrawCheckNomal(false);
                     setInven(inven.concat(d));
                 }
-            }, 100);
+            }, speedMode ? 25 : 100);
 
             localStorage.setItem('coin', coin - 50000);
             setCoin(coin - 50000);
@@ -167,11 +169,11 @@ function App() {
     }, [inven]);
 
     const spDraw = () => {
-        if(coin < 300000)
+        if(coin < 500000)
         {
             notification.open({
                 message: '안내',
-                description: `${(300000-coin).toLocaleString()}다이아 부족합니다.`,
+                description: `${(500000-coin).toLocaleString()}다이아 부족합니다.`,
                 placement: "bottomRight"
             });
         }
@@ -274,69 +276,84 @@ function App() {
                     setInven(inven.concat(d));
                     localStorage.setItem('inven', JSON.stringify(inven));
                 }
-            }, 100);
+            }, speedMode ? 25 : 100);
             setCoin(coin - 500000);
             localStorage.setItem('coin', coin - 500000);
         }
     }
 
-    const sell = (cl, name) => {
-        let c = coin;
-        let l = inven;
+    const sell = (e, cl, name) => {
         let cost = 0;
-
-        const tmp = inven.findIndex((v)=>{
-            if(v.class === cl)
-            {
-                if(v.name === name)
-                {
-                    return v.name === name;
-                }
-            }
-        });
-        l.splice(tmp,1);
 
         if(cl === "N")
         {
-            cost = 1000;
-            setCoin(c + cost);
-            localStorage.setItem('coin', c + cost);
+            cost = 2000;
         }
         if(cl === "R")
         {
-            cost = 5000;
-            setCoin(c + cost);
-            localStorage.setItem('coin', c + cost);
+            cost = 7000;
         }
         if(cl === "SR")
         {
-            cost = 15000;
-            setCoin(c + cost);
-            localStorage.setItem('coin', c + cost);
+            cost = 25000;
         }
 
         if(cl === "SSR")
         {
             cost = 50000;
-            setCoin(c + cost);
-            localStorage.setItem('coin', c + cost);
         }
         if(cl === "UR")
         {
-            cost = 100000;
-            setCoin(c + cost);
-            localStorage.setItem('coin', c + cost);
+            cost = 200000;
         }
         if(cl === "LR")
         {
-            cost = 300000;
+            cost = 600000;
+        }
+        
+        if(e.shiftKey)
+        {
+            const nonFilter = inven.filter((item) => item.name === name);
+            let filter = inven.filter((item) => item.name !== name);
+            if(nonFilter.length > 1)
+            {
+                filter = filter.concat(nonFilter[0]);
+
+                setInven(filter);
+                
+                message.info(`${((nonFilter.length-1)*cost).toLocaleString()}다이아를 얻었습니다`);
+                localStorage.setItem('coin', coin+((nonFilter.length-1)*cost))
+                setCoin(coin+((nonFilter.length-1)*cost));
+            }
+            else
+            {
+                message.info('카드가 한장 남았습니다.');
+            }
+        }
+        else
+        {
+            let c = coin;
+            let l = inven;
+
+            const tmp = inven.findIndex((v)=>{
+                if(v.class === cl)
+                {
+                    if(v.name === name)
+                    {
+                        return v.name === name;
+                    }
+                }
+            });
+
+            l.splice(tmp,1);
+
             setCoin(c + cost);
             localStorage.setItem('coin', c + cost);
+
+            message.info(`${cost.toLocaleString()}다이아를 얻었습니다`);
+
+            localStorage.setItem('inven', JSON.stringify(l));
         }
-
-        message.info(`${cost.toLocaleString()}다이아를 얻었습니다`);
-
-        localStorage.setItem('inven', JSON.stringify(l));
     }
 
     const openInven = () => {
@@ -345,6 +362,21 @@ function App() {
 
     const openRule = () => {
         setIsRuleOpen(true)
+    }
+
+    const reset = () => {
+        if(window.confirm("코인과 인벤토리가 리셋됩니다.\n정말로 초기화 하시겠습니까?"))
+        {
+            if(window.confirm("다시한번 물어볼게요\n정말로 초기화 하실건가요?"))
+            {
+                localStorage.setItem('coin', 400000);
+                localStorage.setItem('inven', JSON.stringify('[]'));
+        
+                setCoin(400000);
+                setInven([]);
+                setDraw([]);
+            }
+        }
     }
 
     const cardSum = () => Data[0].cards.length+Data[1].cards.length+Data[2].cards.length+Data[3].cards.length+Data[4].cards.length+Data[5].cards.length;
@@ -358,7 +390,15 @@ function App() {
                 <button onClick={openRule} className="rule_button" disabled={drawCheckNomal}>
                     게임안내
                 </button>
+                <a className="git" target={"blank"} href="https://github.com/Aboa123/Gacha">GitHub</a>
                 <div style={{ marginRight: 50 }}>
+                    <div style={{ display: "inline-flex", flexDirection: "column" }}>
+                        <Checkbox checked={shildDisable} onChange={()=>setShildDisable(!shildDisable)} style={{ color:"white" }}>미리보기 방지</Checkbox>
+                        <Checkbox checked={speedMode} onChange={()=>setSpeedMode(!speedMode)} style={{ color:"white", margin: 0}}>스피드모드</Checkbox>
+                    </div>
+                    <button onClick={reset} className="resetButton" disabled={drawCheckNomal}>
+                        초기화
+                    </button>
                     <button onClick={nomalDraw} className="nmButton" disabled={drawCheckNomal}>
                         일반 10장 뽑기<br/>
                         50,000 다이아
@@ -375,7 +415,7 @@ function App() {
             </header>
             <div className="panel">
                 <div className="penel_gocha">
-                    {draw.map((item, index)=> <Card key={index} class={item.class} name={item.name} url={item.card.url} />)}
+                    {draw.map((item, index)=> <Card key={index} class={item.class} name={item.name} url={item.card.url} shildDisable={shildDisable} />)}
                 </div>
             </div>
             <Modal
@@ -422,14 +462,15 @@ function App() {
                     </div>
                     <div className="info_right">
                         판매금액<br/>
-                        N등급 1,000원<br/>
-                        R등급 5,000원<br/>
-                        SR등급 15,000원<br/>
+                        N등급 2,000원<br/>
+                        R등급 7,000원<br/>
+                        SR등급 25,000원<br/>
                         SSR등급 50,000원<br/>
-                        UR등급 100,000원<br/>
-                        LR등급 300,000원<br/><br/>
+                        UR등급 200,000원<br/>
+                        LR등급 600,000원<br/><br/>
                         일반뽑기 N ~ LR 랜덤 지급<br/>
-                        스페셜뽑기 N, R 등급 제외 SR ~ LR 랜덤 지급
+                        스페셜뽑기 N, R 등급 제외 SR ~ LR 랜덤 지급<br/><br/>
+                        Shift + Click 시 판매하려는 카드를 1장만 제외하고 모두 판매합니다.
                     </div>
                 </div>
             </Modal>
