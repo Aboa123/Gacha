@@ -49,26 +49,26 @@ function App() {
     }, []);
 
     const nomalDraw = (more) => {
-        if(coin < 50000)
+        let check = false;
+        if(coin < 50000 && more !== 10)
         {
-            if(more === 10)
-            {
-                notification.open({
-                    message: '안내',
-                    description: `${(50000-coin).toLocaleString()}다이아 부족합니다.`,
-                    placement: "bottomRight"
-                });
-            }
-            else
-            {
-                notification.open({
-                    message: '안내',
-                    description: `${(500000-coin).toLocaleString()}다이아 부족합니다.`,
-                    placement: "bottomRight"
-                });
-            }
+            notification.open({
+                message: '안내',
+                description: `${(50000-coin).toLocaleString()}다이아 부족합니다.`,
+                placement: "bottomRight"
+            });
+            check = true;
         }
-        else
+        if(coin < 500000 && more === 10)
+        {
+            notification.open({
+                message: '안내',
+                description: `${(500000-coin).toLocaleString()}다이아 부족합니다.`,
+                placement: "bottomRight"
+            });
+            check = true;
+        }
+        if(!check)
         {
             setDrawCheckSp(true);
             setDrawCheckNomal(true);
@@ -180,7 +180,7 @@ function App() {
                         setInven(inven.concat(d));
                     }
                 }
-            }, speedMode ? 25 : 100);
+            }, speedMode ? 5 : 100);
             if(more === 10)
             {
                 localStorage.setItem('coin', coin - 500000);
@@ -199,26 +199,29 @@ function App() {
     }, [inven]);
 
     const spDraw = (more) => {
-        if(coin < 500000)
+        let check = false;
+
+        if(coin < 500000 && more !== 10)
         {
-            if(more === 10)
-            {
-                notification.open({
-                    message: '안내',
-                    description: `${(5000000-coin).toLocaleString()}다이아 부족합니다.`,
-                    placement: "bottomRight"
-                });
-            }
-            else
-            {
-                notification.open({
-                    message: '안내',
-                    description: `${(500000-coin).toLocaleString()}다이아 부족합니다.`,
-                    placement: "bottomRight"
-                });
-            }
+            notification.open({
+                message: '안내',
+                description: `${(500000-coin).toLocaleString()}다이아 부족합니다.`,
+                placement: "bottomRight"
+            });
+            check = true;
         }
-        else
+
+        if(coin < 5000000 && more === 10)
+        {
+            notification.open({
+                message: '안내',
+                description: `${(5000000-coin).toLocaleString()}다이아 부족합니다.`,
+                placement: "bottomRight"
+            });
+            check = true;
+        }
+
+        if(!check)
         {
             setDrawCheckSp(true);
             setDrawCheckNomal(true);
@@ -330,16 +333,16 @@ function App() {
                         localStorage.setItem('inven', JSON.stringify(inven));
                     }
                 }
-            }, speedMode ? 25 : 100);
+            }, speedMode ? 5 : 100);
             if(more === 10)
-            {
-                setCoin(coin - 500000);
-                localStorage.setItem('coin', coin - 500000);
-            }
-            else
             {
                 setCoin(coin - 5000000);
                 localStorage.setItem('coin', coin - 5000000);
+            }
+            else
+            {
+                setCoin(coin - 500000);
+                localStorage.setItem('coin', coin - 500000);
             }
         }
     }
