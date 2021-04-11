@@ -48,14 +48,25 @@ function App() {
           });
     }, []);
 
-    const nomalDraw = () => {
+    const nomalDraw = (more) => {
         if(coin < 50000)
         {
-            notification.open({
-                message: '안내',
-                description: `${(50000-coin).toLocaleString()}다이아 부족합니다.`,
-                placement: "bottomRight"
-            });
+            if(more === 10)
+            {
+                notification.open({
+                    message: '안내',
+                    description: `${(50000-coin).toLocaleString()}다이아 부족합니다.`,
+                    placement: "bottomRight"
+                });
+            }
+            else
+            {
+                notification.open({
+                    message: '안내',
+                    description: `${(500000-coin).toLocaleString()}다이아 부족합니다.`,
+                    placement: "bottomRight"
+                });
+            }
         }
         else
         {
@@ -149,18 +160,37 @@ function App() {
                     ];
                     setDraw(d);
                 }
-                
-                if(d.length >= 10)
+                if(more === 10)
                 {
-                    clearInterval(a);
-                    setDrawCheckSp(false);
-                    setDrawCheckNomal(false);
-                    setInven(inven.concat(d));
+                    if(d.length >= 100)
+                    {
+                        clearInterval(a);
+                        setDrawCheckSp(false);
+                        setDrawCheckNomal(false);
+                        setInven(inven.concat(d));
+                    }
+                }
+                else
+                {
+                    if(d.length >= 10)
+                    {
+                        clearInterval(a);
+                        setDrawCheckSp(false);
+                        setDrawCheckNomal(false);
+                        setInven(inven.concat(d));
+                    }
                 }
             }, speedMode ? 25 : 100);
-
-            localStorage.setItem('coin', coin - 50000);
-            setCoin(coin - 50000);
+            if(more === 10)
+            {
+                localStorage.setItem('coin', coin - 500000);
+                setCoin(coin - 500000);
+            }
+            else
+            {
+                localStorage.setItem('coin', coin - 50000);
+                setCoin(coin - 50000);
+            }
         }
     }
 
@@ -168,14 +198,25 @@ function App() {
         localStorage.setItem('inven', JSON.stringify(inven));
     }, [inven]);
 
-    const spDraw = () => {
+    const spDraw = (more) => {
         if(coin < 500000)
         {
-            notification.open({
-                message: '안내',
-                description: `${(500000-coin).toLocaleString()}다이아 부족합니다.`,
-                placement: "bottomRight"
-            });
+            if(more === 10)
+            {
+                notification.open({
+                    message: '안내',
+                    description: `${(5000000-coin).toLocaleString()}다이아 부족합니다.`,
+                    placement: "bottomRight"
+                });
+            }
+            else
+            {
+                notification.open({
+                    message: '안내',
+                    description: `${(500000-coin).toLocaleString()}다이아 부족합니다.`,
+                    placement: "bottomRight"
+                });
+            }
         }
         else
         {
@@ -267,18 +308,39 @@ function App() {
                 }
                 
                 setDraw(d);
-                
-                if(d.length >= 10)
+                if(more === 10)
                 {
-                    clearInterval(a);
-                    setDrawCheckSp(false);
-                    setDrawCheckNomal(false);
-                    setInven(inven.concat(d));
-                    localStorage.setItem('inven', JSON.stringify(inven));
+                    if(d.length >= 100)
+                    {
+                        clearInterval(a);
+                        setDrawCheckSp(false);
+                        setDrawCheckNomal(false);
+                        setInven(inven.concat(d));
+                        localStorage.setItem('inven', JSON.stringify(inven));
+                    }
+                }
+                else
+                {
+                    if(d.length >= 10)
+                    {
+                        clearInterval(a);
+                        setDrawCheckSp(false);
+                        setDrawCheckNomal(false);
+                        setInven(inven.concat(d));
+                        localStorage.setItem('inven', JSON.stringify(inven));
+                    }
                 }
             }, speedMode ? 25 : 100);
-            setCoin(coin - 500000);
-            localStorage.setItem('coin', coin - 500000);
+            if(more === 10)
+            {
+                setCoin(coin - 500000);
+                localStorage.setItem('coin', coin - 500000);
+            }
+            else
+            {
+                setCoin(coin - 5000000);
+                localStorage.setItem('coin', coin - 5000000);
+            }
         }
     }
 
@@ -403,9 +465,17 @@ function App() {
                         일반 10장 뽑기<br/>
                         50,000 다이아
                     </button>
+                    <button onClick={() => nomalDraw(10)} className="nmButton" disabled={drawCheckNomal}>
+                        일반 100장 뽑기<br/>
+                        500,000 다이아
+                    </button>
                     <button onClick={spDraw} className="spButton" style={{ marginLeft: 20, height: "auto" }} disabled={drawCheckSp}>
                         스페셜 10장 뽑기<br/>
                         500,000 다이아
+                    </button>
+                    <button onClick={() => spDraw(10)} className="spButton" style={{ marginLeft: 20, height: "auto" }} disabled={drawCheckSp}>
+                        스페셜 100장 뽑기<br/>
+                        5,000,0000 다이아
                     </button>
                 </div>
                 <p>

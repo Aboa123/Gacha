@@ -60,7 +60,6 @@ a {
   padding: 10px;
   border-radius: 10px;
   overflow: hidden;
-  margin-right: 20px;
   height: 100%;
   vertical-align: top;
 }
@@ -75,6 +74,7 @@ a {
   padding: 10px;
   border-radius: 10px;
   overflow: hidden;
+  margin-left: 20px;
 }
 
 .inventory_button {
@@ -142,9 +142,9 @@ a {
   flex-direction: column;
   text-align: center;
   margin: 10px;
-  height: 350px;
-  width: 250px;
-  background-color: gary;
+  height: 300px;
+  width: 200px;
+  background-color: white;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -160,8 +160,8 @@ a {
   flex-direction: column;
   text-align: center;
   margin: 10px;
-  height: 350px;
-  width: 250px;
+  height: 300px;
+  width: 200px;
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
